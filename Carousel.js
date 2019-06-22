@@ -12,13 +12,11 @@ class Carousel {
   }
 
   addStyleToItem(i) {    
-    const convertedIndex =
-      this.currentIndex + this.makeRotateNumb(i + (this.cardList.childElementCount - 1));
-    let currentItemStyle = this.cardList.children[this.makeRotateNumb(convertedIndex)].style
-
-    currentItemStyle.transform = `translateX(${-150 + i * 100}%)`;
-    currentItemStyle.transition = "all .2s linear";
-    currentItemStyle.opacity = i === 1 ? "1" : "0";
+    const convertedIndex = this.currentIndex + this.makeRotateNumb(i + (this.cardList.childElementCount - 1));
+    let currentItem = this.cardList.children[this.makeRotateNumb(convertedIndex)]
+    currentItem.style.transform = `translateX(${-150 + i * 100}%)`;
+    currentItem.style.transition = "all .2s linear";
+    currentItem.style.opacity = i === 1 ? "1" : "0";
   }
 
   moveCurrentIndex(direction) {
