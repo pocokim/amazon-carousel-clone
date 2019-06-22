@@ -1,24 +1,20 @@
 class Carousel {
-  constructor({ leftBtn, rightBtn, numberOfCard }) {
+  constructor({ leftBtn, rightBtn, cardList }) {
     this.leftBtn = leftBtn;
     this.rightBtn = rightBtn;
-    this.numberOfCard = numberOfCard;
+    this.cardList = cardList;
     this.currentIndex = 0;
     this.selectedDirection = undefined;
   }
 
   makeRotateNumb(number) {
-    return number % this.numberOfCard;
+    return number % this.cardList.childElementCount;
   }
 
   addStyleToItem(i) {    
-    // const myChildNumb = this.currentIndex + i > this.numberOfCard ? this.currentIndex + i- this.numberOfCard  : this.currentIndex + i 
     const convertedIndex =
-      this.currentIndex + this.makeRotateNumb(i + (this.numberOfCard - 1));
-    const nthChildNumb = this.makeRotateNumb(convertedIndex) + 1;
-    let currentItemStyle = document.querySelector(
-      `.item:nth-child(${nthChildNumb})`
-    ).style;
+      this.currentIndex + this.makeRotateNumb(i + (this.cardList.childElementCount - 1));
+    let currentItemStyle = this.cardList.children[this.makeRotateNumb(convertedIndex)].style
 
     currentItemStyle.transform = `translateX(${-150 + i * 100}%)`;
     currentItemStyle.transition = "all .2s linear";
@@ -28,17 +24,17 @@ class Carousel {
   moveCurrentIndex(direction) {
     let index =
       direction === "left" ? this.currentIndex - 1 : this.currentIndex + 1;
-    if (index < 0) index += this.numberOfCard;
+    if (index < 0) index += this.cardList.childElementCount;
     this.currentIndex = this.makeRotateNumb(index);
   }
 
   drawCardPosition() {
-    for (let i = 0; i < this.numberOfCard; i++) {
+    for (let i = 0; i < this.cardList.childElementCount; i++) {
       this.addStyleToItem(i);
     }
   }
   makeRandomIndex() {
-    return Math.floor(Math.random() * (this.numberOfCard - 1));
+    return Math.floor(Math.random() * (this.cardList.childElementCount - 1));
   }
 
   onClickHandler(event) {
@@ -63,6 +59,6 @@ class Carousel {
 const leftBtn = document.querySelector(".contents__button_left");
 const rightBtn = document.querySelector(".contents__button_right");
 
-const numberOfCard = document.querySelectorAll(".contents__item").length;
-const carousel = new Carousel({ leftBtn, rightBtn, numberOfCard });
+const cardList = document.querySelector(".carousel__contents > ol");
+const carousel = new Carousel({ leftBtn, rightBtn, cardList });
 carousel.init();
