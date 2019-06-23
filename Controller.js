@@ -2,11 +2,12 @@ import Carousel from './Carousel.js';
 import Navigation from './Naviagtion.js';
 
 class Controller {
-    constructor({ carousel, navigation }) {
+    constructor({ carousel, navigation , animationTime }) {
         this.carousel = carousel;
         this.navigation = navigation;
         this.currentIndex = 0;
         this.previousIndex = undefined;
+        this.animationTime = animationTime;
     }
     registerEvents() {
         this.carousel.leftBtn.addEventListener('click', this.CarouselClickHandler.bind(this));
@@ -29,7 +30,7 @@ class Controller {
         const selectedDirection = event.target.id;
         event.preventDefault();
         this.moveIndex(selectedDirection);
-        this.carousel.drawCardPosition(this.currentIndex,200);
+        this.carousel.drawCardPosition(this.currentIndex,this.animationTime);
         this.navigation.drawCurrentNavItem(this.currentIndex,this.previousIndex); 
     }
     navItemClickHandler(e,idx){
@@ -62,9 +63,10 @@ const rightBtn = document.querySelector(".contents__button_right");
 // ol태그로 잡는것보다 querySelecterAll로 nodeList를 잡는게 더 좋은 방법인듯! 
 const cardList = document.querySelector(".carousel__contents > ol");
 const navbar = document.querySelectorAll(".carousel__title > ol > li");
+const animationTime = 200;
 
-const carousel = new Carousel({ leftBtn, rightBtn, cardList });
-const navigation = new Navigation({ navbar });
-const amazonController = new Controller({ carousel, navigation });
+const carousel = new Carousel({ leftBtn, rightBtn, cardList, animationTime });
+const navigation = new Navigation({ navbar, animationTime });
+const amazonController = new Controller({ carousel, navigation ,animationTime});
 
 amazonController.init();

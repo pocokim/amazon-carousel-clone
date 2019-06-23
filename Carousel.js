@@ -1,8 +1,9 @@
 class Carousel {
-  constructor({ leftBtn, rightBtn, cardList }) {
+  constructor({ leftBtn, rightBtn, cardList, animationTime }) {
     this.leftBtn = leftBtn;
     this.rightBtn = rightBtn;
     this.cardList = cardList;
+    this.animationTime = animationTime;
   }
 
   makeRotateNumb(number) {
@@ -49,7 +50,7 @@ class Carousel {
         this.drawCardPosition(nextIdx, timeSlot);
       });
     }
-    drawCardPositionAsync(actions, 200);
+    drawCardPositionAsync(actions, this.animationTime);
   }
 
 }
