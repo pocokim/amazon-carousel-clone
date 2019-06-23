@@ -30,6 +30,12 @@ body {
     margin: 0 auto;
   }
 }
+
+.curser{
+  transform: scale(1.1);
+  transition: all .2s
+}
+
 .title {
   height: 20%;
   > ol {
