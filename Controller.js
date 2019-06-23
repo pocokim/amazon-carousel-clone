@@ -9,18 +9,13 @@ class Controller {
         this.previousIndex = undefined;
     }
     registerEvents() {
-        // 왼쪽 버튼, 오른쪽 버튼이 클릭되었을때 onClickHandler 가 캐러샐 클래스의 여러 함수를 실행하도록 한다. 
-        // onClickHandler가 현재 index를 바꾸고, this.carousel.drawCardPosition 함수를 실행하여 index에
-        // 맞는 상태를 그리도록 한다. 또한 navigation에도 drawCurrentPosition 함수를 두어 index에 맞는 
-        // 상태를 그리도록 하자. 
         this.carousel.leftBtn.addEventListener('click', this.onClickHandler.bind(this));
         this.carousel.rightBtn.addEventListener('click', this.onClickHandler.bind(this));
     }
     init() {
         this.currentIndex = this.makeRandomIndex();
         this.carousel.drawCardPosition(this.currentIndex);
-        this.navigation.drawCurrentNavItem(this.currentIndex,this.previousIndex); 
-
+        this.navigation.drawCurrentNavItem(this.currentIndex); 
         this.registerEvents();
     }
     onClickHandler(event) {
@@ -36,7 +31,7 @@ class Controller {
             direction === "left" ? this.currentIndex - 1 : this.currentIndex + 1;
         if (index < 0) index += this.carousel.cardList.childElementCount;
         this.currentIndex = this.modCardLength(index);
-        // console.log("이전의 인덱스: " ,this.previousIndex, '현재 인덱스: ',this.currentIndex);
+        // console.log("controller에서 체크하는 현재화면의 인덱스: " ,this.currentIndex, '이전화면의 인덱스: ',this.previousIndex);
     }
     modCardLength(number) {
         return number % this.carousel.cardList.childElementCount;

@@ -4,7 +4,6 @@ class Carousel {
     this.rightBtn = rightBtn;
     this.cardList = cardList;
   }
-  // modCardLength 와 동일한 함수이지만 우선 여기에 둠 
   makeRotateNumb(number) {
     return number % this.cardList.childElementCount;
 }
