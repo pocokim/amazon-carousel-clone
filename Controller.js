@@ -9,8 +9,16 @@ class Controller {
         this.previousIndex = undefined;
     }
     registerEvents() {
-        this.carousel.leftBtn.addEventListener('click', this.onClickHandler.bind(this));
-        this.carousel.rightBtn.addEventListener('click', this.onClickHandler.bind(this));
+        this.carousel.leftBtn.addEventListener('click', this.CarouselClickHandler.bind(this));
+        this.carousel.rightBtn.addEventListener('click', this.CarouselClickHandler.bind(this));
+        this.navigation.navbar.forEach(
+            (navItem,idx)=>{
+                // idx를 navItemClickHandler에 넘겨줄 수 있는 방법이 없을까?
+                navItem.addEventListener('click',(e)=>
+                    this.navItemClickHandler(e,idx)
+                )
+            }
+        )
     }
     init() {
         this.currentIndex = this.makeRandomIndex();
@@ -18,12 +26,18 @@ class Controller {
         this.navigation.drawCurrentNavItem(this.currentIndex); 
         this.registerEvents();
     }
-    onClickHandler(event) {
+    CarouselClickHandler(event) {
         const selectedDirection = event.target.id;
         event.preventDefault();
         this.moveIndex(selectedDirection);
         this.carousel.drawCardPosition(this.currentIndex);
         this.navigation.drawCurrentNavItem(this.currentIndex,this.previousIndex); 
+    }
+    navItemClickHandler(e,idx){
+        this.previousIndex = this.currentIndex;
+        this.currentIndex = idx;
+        // console.log('이전에 눌린 인덱스: ',this.previousIndex,'지금 눌린 인덱스:',this.currentIndex);
+        this.navigation.drawCurrentNavItem(this.currentIndex,this.previousIndex);
     }
     moveIndex(direction) {
         this.previousIndex = this.currentIndex;
@@ -43,8 +57,9 @@ class Controller {
 
 const leftBtn = document.querySelector(".contents__button_left");
 const rightBtn = document.querySelector(".contents__button_right");
+// ol태그로 잡는것보다 querySelecterAll로 nodeList를 잡는게 더 좋은 방법인듯! 
 const cardList = document.querySelector(".carousel__contents > ol");
-const navbar = document.querySelector(".carousel__title > ol");
+const navbar = document.querySelectorAll(".carousel__title > ol > li");
 
 const carousel = new Carousel({ leftBtn, rightBtn, cardList });
 const navigation = new Navigation({ navbar });

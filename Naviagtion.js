@@ -5,8 +5,8 @@ class Navigation {
 
     drawCurrentNavItem(currentIndex,previousIndex = undefined){
         // console.log('onClickHandler로 Navigation으로 넘어온 현재화면의 인덱스:',currentIndex, '넘어온 이전화면의 인덱스',previousIndex);
-        let previousItem = this.navbar.children[previousIndex];
-        let currentItem = this.navbar.children[currentIndex];
+        let previousItem = this.navbar[previousIndex];
+        let currentItem = this.navbar[currentIndex];
 
         if(previousIndex !== undefined) previousItem.classList.toggle('curser');
         currentItem.classList.toggle('curser');
